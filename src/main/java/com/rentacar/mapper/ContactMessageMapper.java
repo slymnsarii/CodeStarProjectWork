@@ -15,12 +15,10 @@ public interface ContactMessageMapper {
 	ContactMessageDTO contactMessageToDTO(ContactMessage contactMessage);
 
 	@Mapping(target = "id", ignore = true)
-	ContactMessage contactMessageRequestToContactMessage(ContactMessageRequest
-			contactMessageRequest);
-	
+	ContactMessage contactMessageRequestToContactMessage(ContactMessageRequest contactMessageRequest);
+
 	// List<ContactMessage> --> List<ContactMessageDTO>
 
 	List<ContactMessageDTO> map(List<ContactMessage> contactMessageList);
-	
-	
+
 }

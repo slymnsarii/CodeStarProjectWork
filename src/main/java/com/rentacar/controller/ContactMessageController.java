@@ -12,9 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rentacar.domain.ContactMessage;
 import com.rentacar.dto.ContactMessageDTO;
 import com.rentacar.dto.request.ContactMessageRequest;
+import com.rentacar.dto.response.ResponseMessage;
 import com.rentacar.dto.response.VRResponse;
 import com.rentacar.mapper.ContactMessageMapper;
 import com.rentacar.service.ContactMessageService;
@@ -58,7 +61,6 @@ public class ContactMessageController {
 		// mapleme yapacagiz
 		List<ContactMessageDTO> contactMessageDTOList = contactMessageMapper.map(contactMessagesList);
 		return ResponseEntity.ok(contactMessageDTOList);
-
 	}
 
 	@GetMapping("/page")
@@ -73,6 +75,28 @@ public class ContactMessageController {
 
 		Page<ContactMessageDTO> pageDto = getPageDTO(contactmessagePage);
 		return ResponseEntity.ok(pageDto);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<VRResponse> deleteContactMessage(@PathVariable Long id) {
+
+		contactMessageService.deleteContactMessage(id);
+
+		VRResponse vrResponse = new VRResponse(ResponseMessage.CONTACTMESSAGE_DELETE_RESPONSE, true);
+		return ResponseEntity.ok(vrResponse);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<VRResponse> updateContactMessage(@PathVariable Long id,
+			@Valid @RequestBody ContactMessageRequest contactMessageRequest) {
+
+		ContactMessage contactMessage = contactMessageMapper
+				.contactMessageRequestToContactMessage(contactMessageRequest);
+
+		contactMessageService.updateContactMessage(id, contactMessage);
+
+		VRResponse vrResponse = new VRResponse(ResponseMessage.CONTACTMESSAGE_UPDATE_RESPONSE, true);
+		return ResponseEntity.ok(vrResponse);
 	}
 
 	@GetMapping("/{id}")
