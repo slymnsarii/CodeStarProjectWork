@@ -14,36 +14,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tbl_cmessage")
+@Entity
+@Table(name="tbl_cmessage")
 public class ContactMessage {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 50, nullable = false)
-	@Size(min = 1,max = 50, message = "Your name '${validatedValue}' must be between {min} and {max} chars long")
+	@Column(length = 50,nullable = false)
+	@Size(min = 1, max = 50, message = "Your name '${validatedValue}' must be between {min} and {max} chars long")
 	@NotNull(message = "Please provide your name")
 	private String name;
-	
-	@Column(length = 50, nullable = false)
+	@Column(length = 50,nullable = false)
 	@Size(min = 5, max = 50, message = "Your subject '${validatedValue}' must be between {min} and {max} chars long")
-	@NotNull(message = "Please provide message subject")
+	@NotNull(message = "Please provide your subject")
 	private String subject;
-	
-	@Column(length = 50, nullable = false)
-	@Size(min = 5, max = 50, message = "Your body '${validatedValue}' must be between {min} and {max} chars long")
-	@NotNull(message = "Please provide message body")
+	@Column(length = 200,nullable = false)
+	@Size(min = 5, max = 200, message = "Your body '${validatedValue}' must be between {min} and {max} chars long")
+	@NotNull(message = "Please provide  message body")
 	private String body;
-	
-	@Column(length = 50, nullable = false)
-	@Email(message = "Provide valid email")
+	@Email(message = "Please provide valid email")
+	@Column(length = 50,nullable = false)
 	private String email;
+	
+	
+	
+	
+	
 
 }

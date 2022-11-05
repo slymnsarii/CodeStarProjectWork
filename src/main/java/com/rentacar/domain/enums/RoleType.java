@@ -2,12 +2,11 @@ package com.rentacar.domain.enums;
 
 public enum RoleType {
 
-	ROLE_CUSTOMER("Customer"), 
-	ROLE_ADMIN("Administrator");
-
+	ROLE_ADMİN("Administrator"),
+	ROLE_CUSTOMER("Customer");
+	
 	private String name;
 
-	// constructorı dışarı açmamak için private yapıyoruz
 	private RoleType(String name) {
 		this.name = name;
 	}
@@ -16,4 +15,9 @@ public enum RoleType {
 		return name;
 	}
 
+	
+	
+	
+	
+	
 }

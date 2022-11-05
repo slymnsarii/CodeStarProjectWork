@@ -19,15 +19,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.rentacar.exception.message.ApiResponseError;
 
-@ControllerAdvice
-public class RentacarExceptionHandler extends ResponseEntityExceptionHandler {
 
-	Logger logger = LoggerFactory.getLogger(RentacarExceptionHandler.class);
+
+@ControllerAdvice
+public class RentACarExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	Logger logger=LoggerFactory.getLogger(RentACarExceptionHandler.class);
 
 	private ResponseEntity<Object> buildResponseEntity(ApiResponseError error) {
-
 		logger.error(error.getMessage());
-
 		return new ResponseEntity<>(error, error.getStatus());
 	}
 
@@ -39,10 +39,33 @@ public class RentacarExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(t -> t.getDefaultMessage())
+				.collect(Collectors.toList());
+
+		ApiResponseError error = new ApiResponseError(HttpStatus.BAD_REQUEST, errors.get(0).toString(),
+				request.getDescription(false));
+
+		return buildResponseEntity(error);
+
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+		ApiResponseError error = new ApiResponseError(HttpStatus.BAD_REQUEST, ex.getMessage(),
+				request.getDescription(false));
+
+		return buildResponseEntity(error);
+	}
+
+	@Override
 	protected ResponseEntity<Object> handleConversionNotSupported(ConversionNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ApiResponseError error = new ApiResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
 				request.getDescription(false));
+
 		return buildResponseEntity(error);
 	}
 
@@ -51,37 +74,32 @@ public class RentacarExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ApiResponseError error = new ApiResponseError(HttpStatus.BAD_REQUEST, ex.getMessage(),
 				request.getDescription(false));
-		return buildResponseEntity(error);
-	}
 
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(e -> e.getDefaultMessage())
-				.collect(Collectors.toList());
-		ApiResponseError error = new ApiResponseError(HttpStatus.BAD_REQUEST, errors.get(0).toString(),
-				request.getDescription(false));
 		return buildResponseEntity(error);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@ExceptionHandler(RuntimeException.class)
 	protected ResponseEntity<Object> handleRunTimeException(RuntimeException ex, WebRequest request) {
-		ApiResponseError error = new ApiResponseError(HttpStatus.NOT_FOUND, ex.getMessage(),
+		ApiResponseError error = new ApiResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
 				request.getDescription(false));
 		return buildResponseEntity(error);
 	}
 
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<Object> handleGeneralException(Exception ex, WebRequest request) {
-		ApiResponseError error = new ApiResponseError(HttpStatus.NOT_FOUND, ex.getMessage(),
-				request.getDescription(false));
-		return buildResponseEntity(error);
-	}
-
-	@Override
-	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
-		ApiResponseError error = new ApiResponseError(HttpStatus.BAD_REQUEST, ex.getMessage(),
+		ApiResponseError error = new ApiResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
 				request.getDescription(false));
 		return buildResponseEntity(error);
 	}
