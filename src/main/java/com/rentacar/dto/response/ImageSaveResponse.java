@@ -9,12 +9,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VRResponse {
+public class ImageSaveResponse extends VRResponse{
 
-	private String message;
+	private  String id;
 
-	private Boolean success;
+	public ImageSaveResponse(String id,String message, Boolean success ) {
+		super(message, success);
+		this.id = id;
+	}
 	
 	
-
 }

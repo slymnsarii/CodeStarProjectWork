@@ -56,11 +56,11 @@ public class ContactMessageController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ContactMessageDTO>> getAllContactMessages() {
+	public ResponseEntity<List<ContactMessage>> getAllContactMessages() {
 		List<ContactMessage> contactMessagesList = contactMessageService.getAllMessages();
 		List<ContactMessageDTO> contactMessageDTOList = contactMessageMapper.map(contactMessagesList);
 
-		return ResponseEntity.ok(contactMessageDTOList);
+		return ResponseEntity.ok(contactMessagesList);
 	}
 
 	@GetMapping("/page")
@@ -106,7 +106,6 @@ public class ContactMessageController {
 	ContactMessage contactMessage=contactMessageMapper.contactMessageRequestToContactMessage(contactMessageRequest);
 		contactMessageService.updateContactMessage(id,contactMessage);
 		VRResponse response=new VRResponse(ResponseMessage.CONTACTMESSAGE_UPDATE_RESPONSE,true);
-		
 		return ResponseEntity.ok(response);
 	}
 	
@@ -135,7 +134,7 @@ public class ContactMessageController {
 	
 	
 	
-	
+	 
 	private Page<ContactMessageDTO> getPageDTO(Page<ContactMessage> contactMessagePage){
 		
 		Page<ContactMessageDTO> dtoPage=contactMessagePage.
@@ -151,7 +150,11 @@ public class ContactMessageController {
 				
 	}
 	
-	
+//	private Page<ContactMessageDTO> getPageDTO(Page<ContactMessage> contactMessagePage) {
+//        return contactMessagePage.map(
+//                contactMessageMapper::contactMessageToDTO );
+//    }
+//	
 	
 	
 	

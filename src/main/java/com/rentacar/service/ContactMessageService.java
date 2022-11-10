@@ -53,6 +53,7 @@ public class ContactMessageService {
 
 
 	public void deleteContactMessage(Long id) {
+	//	ContactMessage contactMessage=getMessageById(id);
 		contactMessageRepository.delete(getMessageById(id));
 		
 	}

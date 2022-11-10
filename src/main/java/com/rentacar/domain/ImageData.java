@@ -1,45 +1,40 @@
 package com.rentacar.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
-
-import com.rentacar.domain.enums.RoleType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@Getter
+
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="tbl_role")
-public class Role {
+@Table(name="image_data")
+public class ImageData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
+	@Lob
+	private byte[] data;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
-	private RoleType type;
-
-	@Override
-	public String toString() {
-		return "Role [type=" + type + "]";
+	
+	public ImageData(Long id) {
+		super();
+		this.id = id;
 	}
-
- 
-	
-	
-	
+	public ImageData(byte[] data) {
+		super();
+		this.data = data;
+	}
 	
 	
 	

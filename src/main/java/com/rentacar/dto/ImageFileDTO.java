@@ -1,4 +1,4 @@
-package com.rentacar.dto.response;
+package com.rentacar.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +9,19 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VRResponse {
+public class ImageFileDTO {
+	
+	
+	
+	private String name;
+	
+	private String url;
+	
+	private String type;
+	
+	private long length;
+	
 
-	private String message;
-
-	private Boolean success;
 	
 	
 

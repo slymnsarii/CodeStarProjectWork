@@ -46,6 +46,7 @@ public class User {
 	private Boolean builtIn=false;
 	
 	
+	
 	@ManyToMany
 	@JoinTable(name="tbl_user_role",
 				joinColumns = @JoinColumn(name="user_id"),

@@ -1,5 +1,7 @@
 package com.rentacar.mapper;
 
+
+
 import java.util.List;
 
 import org.mapstruct.Mapper;
@@ -20,7 +22,7 @@ public interface ContactMessageMapper {
 	List<ContactMessageDTO> map(List<ContactMessage> contactMessageList);
 
 	
-	
+		
 	
 	
 }

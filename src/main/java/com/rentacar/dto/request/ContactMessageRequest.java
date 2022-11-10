@@ -20,6 +20,7 @@ public class ContactMessageRequest {
 	
 	
 	
+	
 	@Size(min = 1, max = 50, message = "Your name '${validatedValue}' must be between {min} and {max} chars long")
 	@NotBlank(message = "Please provide your name")
 	private String name;
@@ -34,6 +35,8 @@ public class ContactMessageRequest {
 	
 	@Email(message = "Please provide valid email")
 	private String email;
+	
+	
 	
 	
 	
